@@ -4,6 +4,6 @@
 
 -----
 
-### Projest start
+### Project start
 
 ```yarn start```

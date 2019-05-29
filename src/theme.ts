@@ -13,14 +13,15 @@ type TFontSizes = string[]
 
 type TRadius = string
 
+type TBreakpoints = string[]
+
 interface TTheme {
   colors: TColors
   shadows: TShadows
   fontSizes: TFontSizes
   radius: TRadius
+  breakpoints: TBreakpoints
 }
-
-type TBreakpoints = string[]
 
 type TFactoryFunc = (
   literals: TemplateStringsArray,
@@ -55,11 +56,11 @@ const fontSizes: TFontSizes = ['10px', '11px', '12px', '13px', '16px', '32px']
 
 const radius: TRadius = '5px'
 
-const theme: TTheme = { colors, shadows, fontSizes, radius }
+const breakpoints: TBreakpoints = ['414px', '560px', '728px', '818px']
+
+const theme: TTheme = { colors, shadows, fontSizes, radius, breakpoints }
 
 export default theme
-
-const breakpoints: TBreakpoints = ['560px', '728px', '1095px', '1186px']
 
 const [
   phoneBreakpoint,
