@@ -102,17 +102,13 @@ const global = css`
   }
 
   html,
-  body {
+  body,
+  #root {
     width: 100%;
     height: 100%;
     font-family: 'Open Sans', sans-serif;
 
     background-color: ${colors.pageBackground};
-  }
-
-  #root {
-    width: 100%;
-    height: 100%;
   }
 `
 
