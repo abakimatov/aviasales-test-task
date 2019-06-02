@@ -42,7 +42,8 @@ const colors: TColors = {
   hoveredBuyButton: '#FF8124',
   border: '#D2D5D6',
   primaryBorder: '#64B5F5',
-  currencyHover: '#F2FCFF'
+  currencyHover: '#F2FCFF',
+  ticketDivider: '#ECEFF1'
 }
 
 const shadows: TShadows = {

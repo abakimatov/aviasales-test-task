@@ -1,9 +1,11 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import { FiltersTitle, CheckboxItem } from 'ui'
+import { FiltersTitle } from 'ui'
 import { getStopPluralForm } from 'utils/pluralForm'
 import { i18n } from './i18n'
+
+import { CheckboxItem } from './CheckboxItem'
 
 type TProps = {
   availableStops: number[]
@@ -47,7 +49,8 @@ export const StopsControls: React.FC<TProps> = ({
   }
 
   const allIsChecked: boolean = availableStops.length === selectedStops.length
-  console.log(selectedStops)
+
+  //TODO: need to add disable in case when on only one variant of stops we have
   return (
     <Root>
       <TitleWrap>

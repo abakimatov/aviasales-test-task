@@ -1,6 +1,7 @@
 import React from 'react'
 
 import { getStopPluralForm } from 'utils/pluralForm'
+import { formatPrice } from 'utils/formatPrice'
 
 it('should be пересадка', () => {
   expect(getStopPluralForm(1)).toBe('пересадка')

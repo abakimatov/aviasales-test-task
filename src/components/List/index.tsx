@@ -1,20 +1,37 @@
 import React from 'react'
 import styled from 'styled-components'
 
-const Root = styled.ul`
-  grid-column-start: 2;
-  grid-column-end: 2;
+import { Ticket } from './Ticket'
 
-  width: 100%;
+import { TTicket } from 'types'
+
+type TProps = {
+  tickets: TTicket[]
+  selectedStops: number[]
+  selectedCurrency: string
+}
+
+const Root = styled.ul`
+  flex: 1;
+
   padding-left: 10px;
   list-style: none;
   margin: 0;
 `
 
-export const List: React.FC = () => {
+export const List: React.FC<TProps> = ({
+  tickets,
+  selectedStops,
+  selectedCurrency
+}): JSX.Element => {
+  const updatedTickets: TTicket[] = tickets
+    .filter(el => selectedStops.includes(el.stops))
+    .sort((a, b) => a.price - b.price)
   return (
     <Root>
-      <h1>List</h1>
+      {updatedTickets.map((el, idx) => (
+        <Ticket key={idx} data={el} currency={selectedCurrency} />
+      ))}
     </Root>
   )
 }
