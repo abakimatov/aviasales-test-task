@@ -3,16 +3,14 @@ import React from 'react'
 import { Layout, Spinner } from 'ui'
 import { useFetch } from 'core/dataHook'
 
-import { Filters } from './components/Filters'
-import { List } from './components/List'
+import { Main } from './components/Main'
 
 const App: React.FC = (): JSX.Element => {
   const { data, loading } = useFetch()
-  console.log(loading)
   return (
     <Layout>
-      {loading && <Spinner />} <Filters />
-      <List />
+      {loading && <Spinner />}
+      {!loading && <Main {...data} />}
     </Layout>
   )
 }

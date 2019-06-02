@@ -3,10 +3,12 @@ import styled from 'styled-components'
 
 const Root = styled.div`
   width: 100%;
-  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
+
+  grid-column-start: 2;
+  grid-column-end: 2;
 `
 
 export const Spinner: React.FC = (): JSX.Element => (

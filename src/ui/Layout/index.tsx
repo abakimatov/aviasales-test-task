@@ -10,7 +10,7 @@ const Root = styled.div`
   height: 100%;
   display: grid;
   grid-template-columns: 100%;
-  grid-template-rows: 161px 100%;
+  grid-template-rows: 161px calc(100% - 161px);
 `
 
 const Main = styled.main`
@@ -25,21 +25,6 @@ const Main = styled.main`
   `};
 `
 
-const Content = styled.div`
-  display: grid;
-  width: 100%;
-  grid-column-start: 2;
-  grid-column-end: 2;
-  grid-template-columns: 242px 576px;
-
-  ${media.wide`
-    grid-column-start: 1;
-    grid-column-end: 1;
-    grid-template-columns: 242px 100%;
-    padding: 0 20px;
-  `};
-`
-
 type TProps = {
   children: ReactNode
 }
@@ -47,8 +32,6 @@ type TProps = {
 export const Layout: FC<TProps> = ({ children }): JSX.Element => (
   <Root>
     <Header />
-    <Main>
-      <Content>{children}</Content>
-    </Main>
+    <Main>{children}</Main>
   </Root>
 )
