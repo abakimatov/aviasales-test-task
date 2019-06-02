@@ -8,20 +8,19 @@ import { Header } from './Header'
 const Root = styled.div`
   width: 100%;
   height: 100%;
-  display: grid;
-  grid-template-columns: 100%;
-  grid-template-rows: 161px calc(100% - 161px);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
 `
 
-const Main = styled.main`
-  display: grid;
-  grid-row-start: 2;
-  grid-row-end: 2;
-
-  ${({ theme }) => `grid-template-columns: auto ${theme.breakpoints[3]} auto`};
+const Main = styled.div`
+  display: flex;
+  width: ${({ theme }) => theme.breakpoints[3]};
+  height: calc(100% - 161px);
 
   ${media.wide`
-    grid-template-columns: 100%;
+    width: 100%;
   `};
 `
 

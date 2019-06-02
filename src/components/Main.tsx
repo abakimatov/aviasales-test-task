@@ -14,16 +14,12 @@ type TProps = {
 }
 
 const Root = styled.div`
-  display: grid;
+  display: flex;
   width: 100%;
-  grid-column-start: 2;
-  grid-column-end: 2;
-  grid-template-columns: 242px 576px;
+  justify-content: space-between;
+  align-items: flex-start;
 
   ${media.wide`
-    grid-column-start: 1;
-    grid-column-end: 1;
-    grid-template-columns: 242px 100%;
     padding: 0 20px;
   `};
 `
@@ -47,7 +43,11 @@ export const Main: React.FC<TProps> = ({ tickets, rates }): JSX.Element => {
         tickets={tickets}
         rates={rates}
       />
-      <List />
+      <List
+        tickets={ticketsList}
+        selectedCurrency={selectedCurrency}
+        selectedStops={selectedStops}
+      />
     </Root>
   )
 }

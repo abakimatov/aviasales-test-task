@@ -19,18 +19,15 @@ type TProps = {
 }
 
 const Root = styled.div`
-  grid-column-start: 1;
-  grid-column-end: 1;
-
   display: flex;
   justify-content: flex-start;
   align-items: flex-start;
-  width: 100%;
+  width: 242px;
   padding-right: 10px;
 `
 
 const Content = styled.section`
-  width: 100%;
+  width: 232px;
 
   background-color: ${({ theme }) => theme.colors.white};
   box-shadow: ${({ theme }) => theme.shadows.card};

@@ -73,6 +73,7 @@ const HiddenRadio = styled.input.attrs({
 
 const Text = styled.span<{ checked: boolean }>`
   line-height: 22px;
+  letter-spacing: 0.5px;
 
   font-size: ${({ theme }) => theme.fontSizes[2]};
   color: ${({ theme, checked }) =>
