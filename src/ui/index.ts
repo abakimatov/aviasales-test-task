@@ -1,3 +1,6 @@
 export { Logo } from './Logo'
 export { Layout } from './Layout'
 export { Spinner } from './Spinner'
+export { RadioButton } from './RadioButton'
+export { FiltersTitle } from './FiltersTitle'
+export { CheckboxItem } from './CheckboxItem'

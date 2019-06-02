@@ -13,6 +13,5 @@ export type TTicket = {
 }
 
 export type TRates = {
-  USD: number
-  EUR: number
+  [key: string]: number
 }

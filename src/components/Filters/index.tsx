@@ -1,6 +1,23 @@
 import React from 'react'
 import styled from 'styled-components'
 
+import { TTicket, TRates } from 'types'
+import { Currencies } from 'enums'
+
+import { CurrenciesControls } from './CurrenciesControls'
+import { StopsControls } from './StopsControls'
+
+type TProps = {
+  selectedCurrency: string
+  setCurrency: (currency: string) => void
+  availableStops: number[]
+  selectedStops: number[]
+  setSelectedStops: (stops: number[]) => void
+  setTickets: (tickets: TTicket[]) => void
+  tickets: TTicket[]
+  rates: TRates
+}
+
 const Root = styled.div`
   grid-column-start: 1;
   grid-column-end: 1;
@@ -14,18 +31,80 @@ const Root = styled.div`
 
 const Content = styled.section`
   width: 100%;
-  height: 100px;
 
-  background-color: ${({ theme }) => theme.colors.pageBackground};
+  background-color: ${({ theme }) => theme.colors.white};
   box-shadow: ${({ theme }) => theme.shadows.card};
   border-radius: ${({ theme }) => theme.radius};
 `
 
-export const Filters: React.FC = () => {
+export const Filters: React.FC<TProps> = ({
+  selectedCurrency,
+  setCurrency,
+  availableStops,
+  selectedStops,
+  setSelectedStops,
+  setTickets,
+  tickets,
+  rates
+}) => {
+  const applyExchangeRate = (currency: string): TTicket[] => {
+    if (currency === Currencies.RUB) return tickets
+
+    const updatedTickets: TTicket[] = tickets.map(el => {
+      const newPrice: number = Math.floor(el.price * rates[currency])
+
+      return { ...el, price: newPrice }
+    })
+
+    return updatedTickets
+  }
+
+  const onToggleCurrency = (currency: string): void => {
+    if (currency === selectedCurrency) return
+
+    const updatedTickets = applyExchangeRate(currency)
+
+    setCurrency(currency)
+    setTickets(updatedTickets)
+  }
+
+  const onToggleAll = (checked: boolean) => {
+    const stops: number[] = checked ? [] : availableStops
+
+    setSelectedStops(stops)
+  }
+
+  const onToggleCheckbox = (value: number) => {
+    const stopIsChecked: boolean = selectedStops.includes(value)
+
+    const stops = !stopIsChecked
+      ? [...selectedStops, value]
+      : selectedStops.filter(el => el !== value)
+
+    setSelectedStops(stops)
+  }
+
+  const onToggleOnly = (value: number) => {
+    const updatedStops = availableStops.filter(el => el === value)
+
+    console.log(updatedStops)
+    setSelectedStops(updatedStops)
+  }
+
   return (
     <Root>
       <Content>
-        <h1>Filters</h1>
+        <CurrenciesControls
+          selectedCurrency={selectedCurrency}
+          setCurrency={onToggleCurrency}
+        />
+        <StopsControls
+          availableStops={availableStops}
+          selectedStops={selectedStops}
+          onToggleCheckbox={onToggleCheckbox}
+          onToggleAll={onToggleAll}
+          onToggleOnly={onToggleOnly}
+        />
       </Content>
     </Root>
   )
