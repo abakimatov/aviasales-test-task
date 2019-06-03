@@ -30,7 +30,7 @@ const Time = styled.span`
   text-align: center;
 
   ${media.desktop`
-    width: 100%;
+  width: 100%;
     margin-bottom: 20px;
   `};
 `

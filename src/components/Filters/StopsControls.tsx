@@ -54,42 +54,52 @@ export const StopsControls: React.FC<TProps> = ({
   onToggleAll,
   onToggleOnly
 }): JSX.Element => {
-  const getItemText = (stop: number): string => {
+  const getTextItem = (stop: number): string => {
     const stringFirstPart = stop === 0 ? `Без` : stop
 
     return `${stringFirstPart} ${getStopPluralForm(stop)}`
   }
 
-  const allIsChecked: boolean = availableStops.length === selectedStops.length
+  const onToggle = (checkAll: boolean) => (
+    value: number,
+    isChecked: boolean
+  ) => {
+    return checkAll ? onToggleAll(isChecked) : onToggleCheckbox(value)
+  }
 
-  //TODO: need to add disable in case when on only one variant of stops we have
+  const allIsChecked: boolean = availableStops.length === selectedStops.length
+  const onlyOneStopOption: boolean = availableStops.length < 2
+
   return (
     <Root>
       <TitleWrap>
         <FiltersTitle text={i18n.stopsTitle} />
       </TitleWrap>
       <CheckboxesWrap>
-        <CheckboxItem
-          isChecked={allIsChecked}
-          disabled={false}
-          value="all"
-          text="Все"
-          onToggle={onToggleAll}
-          checkAllItem={true}
-          onToggleOnly={onToggleOnly}
-        />
+        {!onlyOneStopOption && (
+          <CheckboxItem
+            isChecked={allIsChecked}
+            disabled={false}
+            value="all"
+            text="Все"
+            onToggle={onToggle(true)}
+            checkAllItem={true}
+            onToggleOnly={onToggleOnly}
+          />
+        )}
+
         {availableStops.map((el, idx) => {
           const isChecked: boolean = selectedStops.includes(el)
-          const text: string = getItemText(el)
+          const text: string = getTextItem(el)
 
           return (
             <CheckboxItem
               key={idx}
               isChecked={isChecked}
-              disabled={false}
+              disabled={onlyOneStopOption}
               value={el}
               text={text}
-              onToggle={onToggleCheckbox}
+              onToggle={onToggle(false)}
               onToggleOnly={onToggleOnly}
             />
           )

@@ -3,8 +3,8 @@ import styled from 'styled-components'
 
 import { media } from 'theme'
 import { TTicket, TRates } from 'types'
-import { Currencies } from 'enums'
 
+import { Currencies } from '../constants'
 import { Filters } from './Filters'
 import { List } from './List'
 
