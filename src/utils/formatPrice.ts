@@ -1,7 +1,12 @@
 export const formatPrice = (price: number): string => {
   const formated: string = price.toLocaleString('en-En', {})
 
-  const result: string = formated.split(',').join(' ')
+  const splited: string[] = formated.split(',')
+  const lastElementIdx = splited.length - 1
 
-  return result
+  //hack for IE10
+  if (splited[lastElementIdx].length < 3)
+    return splited.slice(0, lastElementIdx).join(' ')
+
+  return splited.join(' ')
 }

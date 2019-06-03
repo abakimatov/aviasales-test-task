@@ -1,28 +1,28 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import { FiltersTitle } from 'ui'
 import { media } from 'theme'
-import { getStopPluralForm } from 'utils/pluralForm'
-import { i18n } from './i18n'
+import { FiltersTitle } from 'ui'
+import { getStopLabel } from 'utils/helpers'
 
+import { i18n } from './i18n'
 import { CheckboxItem } from './CheckboxItem'
 
 type TProps = {
-  availableStops: number[]
   selectedStops: number[]
-  onToggleCheckbox: (stop: number) => void
-  onToggleAll: (checked: boolean) => void
+  availableStops: number[]
   onToggleOnly: (stop: number) => void
+  onToggleAll: (checked: boolean) => void
+  onToggleCheckbox: (stop: number) => void
 }
 
 const Root = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
-  padding: 0 0 15px 0;
   width: 100%;
+  display: flex;
+  padding: 0 0 15px 0;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
 
   ${media.wide`
     padding: 15px 0;
@@ -42,29 +42,23 @@ const TitleWrap = styled.span`
 const CheckboxesWrap = styled.div`
   width: 100%;
   display: flex;
+  align-items: center;
   flex-direction: column;
   justify-content: flex-start;
-  align-items: center;
 `
 
 export const StopsControls: React.FC<TProps> = ({
-  availableStops,
-  selectedStops,
-  onToggleCheckbox,
   onToggleAll,
-  onToggleOnly
+  onToggleOnly,
+  selectedStops,
+  availableStops,
+  onToggleCheckbox
 }): JSX.Element => {
-  const getTextItem = (stop: number): string => {
-    const stringFirstPart = stop === 0 ? `Без` : stop
-
-    return `${stringFirstPart} ${getStopPluralForm(stop)}`
-  }
-
-  const onToggle = (checkAll: boolean) => (
+  const onToggle = (checkAllCheckbox: boolean) => (
     value: number,
     isChecked: boolean
   ) => {
-    return checkAll ? onToggleAll(isChecked) : onToggleCheckbox(value)
+    return checkAllCheckbox ? onToggleAll(isChecked) : onToggleCheckbox(value)
   }
 
   const allIsChecked: boolean = availableStops.length === selectedStops.length
@@ -78,29 +72,29 @@ export const StopsControls: React.FC<TProps> = ({
       <CheckboxesWrap>
         {!onlyOneStopOption && (
           <CheckboxItem
-            isChecked={allIsChecked}
-            disabled={false}
-            value="all"
             text="Все"
-            onToggle={onToggle(true)}
+            value="all"
+            disabled={false}
             checkAllItem={true}
+            isChecked={allIsChecked}
             onToggleOnly={onToggleOnly}
+            onToggle={onToggle(true)}
           />
         )}
 
         {availableStops.map((el, idx) => {
+          const label: string = getStopLabel(el)
           const isChecked: boolean = selectedStops.includes(el)
-          const text: string = getTextItem(el)
 
           return (
             <CheckboxItem
               key={idx}
-              isChecked={isChecked}
-              disabled={onlyOneStopOption}
               value={el}
-              text={text}
-              onToggle={onToggle(false)}
+              text={label}
+              isChecked={isChecked}
               onToggleOnly={onToggleOnly}
+              disabled={onlyOneStopOption}
+              onToggle={onToggle(false)}
             />
           )
         })}

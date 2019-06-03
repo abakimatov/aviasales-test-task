@@ -4,29 +4,31 @@ import styled from 'styled-components'
 import activeArrow from 'ui/Icons/checkboxActiveArrow.svg'
 import disabledArrow from 'ui/Icons/checkboxDisableArrow.svg'
 
+import { i18n } from './i18n'
+
 type TProps = {
-  isChecked: boolean
-  disabled: boolean
   value: any
   text: string
+  disabled: boolean
+  isChecked: boolean
   checkAllItem?: boolean
-  onToggle: (value: number, isChecked: boolean) => void
   onToggleOnly: (value: number) => void
+  onToggle: (value: number, isChecked: boolean) => void
 }
 
 const CheckOnlyButton = styled.div<{ checkAllItem: boolean | undefined }>`
-  transition: all 0.2s;
-  position: absolute;
-  right: 15px;
-  line-height: 36px;
-  bottom: 100%;
-  text-transform: uppercase;
-  cursor: pointer;
   opacity: 0;
+  right: 15px;
+  bottom: 100%;
+  cursor: pointer;
+  line-height: 36px;
+  position: absolute;
+  transition: all 0.2s;
+  text-transform: uppercase;
 
-  display: ${({ checkAllItem }) => (checkAllItem ? 'none' : 'block')};
-  font-size: ${({ theme }) => theme.fontSizes[1]};
   color: ${({ theme }) => theme.colors.primary};
+  font-size: ${({ theme }) => theme.fontSizes[1]};
+  display: ${({ checkAllItem }) => (checkAllItem ? 'none' : 'block')};
 
   &:hover {
     color: ${({ theme }) => theme.colors.hoveredBuyButton};
@@ -36,13 +38,13 @@ const CheckOnlyButton = styled.div<{ checkAllItem: boolean | undefined }>`
 const Root = styled.div`
   width: 100%;
   height: 36px;
-  padding: 0 15px;
   display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  transition: bottom 0.15s ease-out, opacity 0.15s ease-out;
-  position: relative;
+  padding: 0 15px;
   overflow: hidden;
+  position: relative;
+  align-items: center;
+  justify-content: flex-start;
+  transition: bottom 0.15s ease-out, opacity 0.15s ease-out;
 
   &:hover {
     background-color: ${({ theme }) => theme.colors.currencyHover};
@@ -54,15 +56,15 @@ const Root = styled.div`
   }
 `
 
-const CheckboxMask = styled.span`
-  height: 19px;
+const CheckboxMask = styled.div`
   width: 19px;
-  margin-right: 11px;
-  overflow: hidden;
-  border-radius: 3px;
-  background-position: center top -7px;
-  background-repeat: no-repeat;
+  height: 19px;
   cursor: pointer;
+  overflow: hidden;
+  margin-right: 11px;
+  border-radius: 3px;
+  background-repeat: no-repeat;
+  background-position: center top -7px;
   transition: background-position 0.2s, border 0.2s ease-in-out;
 
   background-image: url(${activeArrow});
@@ -72,69 +74,72 @@ const CheckboxMask = styled.span`
 const Checkbox = styled.input.attrs({
   type: 'checkbox'
 })`
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  height: 19px;
   width: 19px;
-  margin-right: 11px;
-  transition: all 0.2s;
-  position: relative;
+  height: 19px;
   display: none;
+  margin-right: 11px;
+  position: relative;
+  transition: all 0.2s;
+  -moz-appearance: none;
+  -webkit-appearance: none;
 
   &:checked + ${CheckboxMask} {
+    background-repeat: no-repeat;
+    background-position: center center;
+
+    background-image: url(${activeArrow});
     border: ${({ theme }) => `1px solid ${theme.colors.primary}`};
     background-color: ${({ theme }) => theme.colors.currencyHover};
-    background-image: url(${activeArrow});
-    background-position: center center;
-    background-repeat: no-repeat;
   }
 
   &:disabled + ${CheckboxMask} {
-    border: ${({ theme }) => `1px solid ${theme.colors.border}`};
-    background-image: url(${disabledArrow});
-    background-position: center top -7px;
-    background-repeat: no-repeat;
     cursor: default;
+    background-repeat: no-repeat;
+    background-position: center top -7px;
+
+    background-image: url(${disabledArrow});
+    border: ${({ theme }) => `1px solid ${theme.colors.border}`};
   }
 
   &:checked:disabled + ${CheckboxMask} {
-    border: ${({ theme }) => `1px solid ${theme.colors.border}`};
-    background-color: ${({ theme }) => theme.colors.white};
-    background-image: url(${disabledArrow});
-    background-position: center center;
-    background-repeat: no-repeat;
     cursor: default;
+    background-repeat: no-repeat;
+    background-position: center center;
+
+    background-image: url(${disabledArrow});
+    background-color: ${({ theme }) => theme.colors.white};
+    border: ${({ theme }) => `1px solid ${theme.colors.border}`};
   }
 `
 
 const Text = styled.span`
-  font-size: ${({ theme }) => theme.fontSizes[3]};
   color: ${({ theme }) => theme.colors.darkText};
+  font-size: ${({ theme }) => theme.fontSizes[3]};
 `
 
 export const CheckboxItem: React.FC<TProps> = ({
-  isChecked,
-  disabled,
-  value,
   text,
+  value,
+  disabled,
   onToggle,
-  checkAllItem,
-  onToggleOnly
+  isChecked,
+  onToggleOnly,
+  checkAllItem
 }): JSX.Element => (
   <Root>
     <Checkbox
-      onChange={() => onToggle(value, isChecked)}
+      value={value}
       checked={isChecked}
       disabled={disabled}
-      value={value}
+      onChange={() => onToggle(value, isChecked)}
     />
     <CheckboxMask onClick={() => onToggle(value, isChecked)} />
     <Text>{text}</Text>
     <CheckOnlyButton
-      onClick={() => onToggleOnly(value)}
       checkAllItem={checkAllItem}
+      onClick={() => onToggleOnly(value)}
     >
-      только
+      {i18n.onlyBtnText}
     </CheckOnlyButton>
   </Root>
 )

@@ -1,31 +1,32 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import { TTicket, TRates } from 'types'
 import { media } from 'theme'
+import { TTicket, TRates } from 'types'
 
 import { Currencies } from '../../constants'
-import { StopsControls } from './StopsControls'
 import { FiltersTitle, RadioButton } from 'ui'
+
 import { i18n } from './i18n'
+import { StopsControls } from './StopsControls'
 
 type TProps = {
+  rates: TRates
+  tickets: TTicket[]
+  selectedStops: number[]
+  availableStops: number[]
   selectedCurrency: string
   setCurrency: (currency: string) => void
-  availableStops: number[]
-  selectedStops: number[]
-  setSelectedStops: (stops: number[]) => void
   setTickets: (tickets: TTicket[]) => void
-  tickets: TTicket[]
-  rates: TRates
+  setSelectedStops: (stops: number[]) => void
 }
 
 const Root = styled.div`
-  display: flex;
-  justify-content: flex-start;
-  align-items: flex-start;
   width: 242px;
+  display: flex;
   padding-right: 10px;
+  align-items: flex-start;
+  justify-content: flex-start;
 
   ${media.wide`
     width: 300px;
@@ -38,15 +39,15 @@ const Root = styled.div`
 const Content = styled.section`
   width: 232px;
 
-  background-color: ${({ theme }) => theme.colors.white};
-  box-shadow: ${({ theme }) => theme.shadows.card};
   border-radius: ${({ theme }) => theme.radius};
+  box-shadow: ${({ theme }) => theme.shadows.card};
+  background-color: ${({ theme }) => theme.colors.white};
 
   ${media.wide`
     width: 100%;
     display: flex;
-    justify-content: flex-start;
     align-items: flex-start;
+    justify-content: flex-start;
   `};
 `
 
@@ -54,8 +55,8 @@ const CurrenciesControls = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
   align-items: flex-start;
+  justify-content: flex-start;
   padding: 15px 15px 30px 15px;
 
   ${media.wide`
@@ -64,37 +65,37 @@ const CurrenciesControls = styled.div`
 `
 
 const RadiosWrap = styled.div`
-  margin-top: 11px;
   width: 100%;
   display: flex;
-  justify-content: space-between;
+  margin-top: 11px;
   align-items: center;
+  justify-content: space-between;
 
   ${media.wide`
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: flex-start;
     width: unset;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
   `};
 `
 
 export const Filters: React.FC<TProps> = ({
-  selectedCurrency,
-  setCurrency,
-  availableStops,
-  selectedStops,
-  setSelectedStops,
-  setTickets,
+  rates,
   tickets,
-  rates
+  setTickets,
+  setCurrency,
+  selectedStops,
+  availableStops,
+  selectedCurrency,
+  setSelectedStops
 }) => {
   const applyExchangeRate = (currency: string): TTicket[] => {
     if (currency === Currencies.RUB) return tickets
 
     const updatedTickets: TTicket[] = tickets.map(el => {
-      const newPrice: number = Math.floor(el.price * rates[currency])
+      const exchangedPrice: number = Math.floor(el.price * rates[currency])
 
-      return { ...el, price: newPrice }
+      return { ...el, price: exchangedPrice }
     })
 
     return updatedTickets
@@ -109,27 +110,26 @@ export const Filters: React.FC<TProps> = ({
     setTickets(updatedTickets)
   }
 
-  const onToggleAll = (checked: boolean) => {
-    const stops: number[] = checked ? [] : availableStops
+  const onToggleAll = (isChecked: boolean): void => {
+    const pickedStops: number[] = isChecked ? [] : availableStops
 
-    setSelectedStops(stops)
+    setSelectedStops(pickedStops)
   }
 
   const onToggleCheckbox = (value: number) => {
     const stopIsChecked: boolean = selectedStops.includes(value)
 
-    const stops = !stopIsChecked
+    const pickedStops: number[] = !stopIsChecked
       ? [...selectedStops, value]
       : selectedStops.filter(el => el !== value)
 
-    setSelectedStops(stops)
+    setSelectedStops(pickedStops)
   }
 
   const onToggleOnly = (value: number) => {
-    const updatedStops = availableStops.filter(el => el === value)
+    const pickedStops: number[] = availableStops.filter(el => el === value)
 
-    console.log(updatedStops)
-    setSelectedStops(updatedStops)
+    setSelectedStops(pickedStops)
   }
 
   const currenciesKeys: string[] = Object.keys(Currencies)
@@ -147,21 +147,21 @@ export const Filters: React.FC<TProps> = ({
               return (
                 <RadioButton
                   key={idx}
-                  onToggle={onToggleCurrency}
                   value={value}
-                  checked={isChecked}
                   name="currencies"
+                  checked={isChecked}
+                  onToggle={onToggleCurrency}
                 />
               )
             })}
           </RadiosWrap>
         </CurrenciesControls>
         <StopsControls
-          availableStops={availableStops}
-          selectedStops={selectedStops}
-          onToggleCheckbox={onToggleCheckbox}
           onToggleAll={onToggleAll}
           onToggleOnly={onToggleOnly}
+          selectedStops={selectedStops}
+          availableStops={availableStops}
+          onToggleCheckbox={onToggleCheckbox}
         />
       </Content>
     </Root>

@@ -4,12 +4,12 @@ import { TRates, TTicket } from 'types'
 import { getCurrencies } from 'utils/exchangeApi'
 
 type TData = {
-  tickets: TTicket[]
   rates: TRates
+  tickets: TTicket[]
 }
 type TResult = {
-  loading: boolean
   data: TData
+  loading: boolean
 }
 type TUseFetch = () => TResult
 
