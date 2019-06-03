@@ -2,10 +2,12 @@ import React from 'react'
 import styled from 'styled-components'
 
 import { TTicket, TRates } from 'types'
-import { Currencies } from 'enums'
+import { media } from 'theme'
 
-import { CurrenciesControls } from './CurrenciesControls'
+import { Currencies } from '../../constants'
 import { StopsControls } from './StopsControls'
+import { FiltersTitle, RadioButton } from 'ui'
+import { i18n } from './i18n'
 
 type TProps = {
   selectedCurrency: string
@@ -24,6 +26,13 @@ const Root = styled.div`
   align-items: flex-start;
   width: 242px;
   padding-right: 10px;
+
+  ${media.wide`
+    width: 300px;
+    padding-right: 0;
+    padding-bottom: 30px;
+    justify-content: center;
+  `};
 `
 
 const Content = styled.section`
@@ -32,6 +41,41 @@ const Content = styled.section`
   background-color: ${({ theme }) => theme.colors.white};
   box-shadow: ${({ theme }) => theme.shadows.card};
   border-radius: ${({ theme }) => theme.radius};
+
+  ${media.wide`
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+  `};
+`
+
+const CurrenciesControls = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding: 15px 15px 30px 15px;
+
+  ${media.wide`
+    width: unset;
+  `};
+`
+
+const RadiosWrap = styled.div`
+  margin-top: 11px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  ${media.wide`
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    width: unset;
+  `};
 `
 
 export const Filters: React.FC<TProps> = ({
@@ -88,13 +132,30 @@ export const Filters: React.FC<TProps> = ({
     setSelectedStops(updatedStops)
   }
 
+  const currenciesKeys: string[] = Object.keys(Currencies)
+
   return (
     <Root>
       <Content>
-        <CurrenciesControls
-          selectedCurrency={selectedCurrency}
-          setCurrency={onToggleCurrency}
-        />
+        <CurrenciesControls>
+          <FiltersTitle text={i18n.currenciesTitle} />
+          <RadiosWrap>
+            {currenciesKeys.map((key, idx) => {
+              const value: string = Currencies[key]
+              const isChecked: boolean = value === selectedCurrency
+
+              return (
+                <RadioButton
+                  key={idx}
+                  onToggle={onToggleCurrency}
+                  value={value}
+                  checked={isChecked}
+                  name="currencies"
+                />
+              )
+            })}
+          </RadiosWrap>
+        </CurrenciesControls>
         <StopsControls
           availableStops={availableStops}
           selectedStops={selectedStops}

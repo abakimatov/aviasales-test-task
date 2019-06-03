@@ -4,6 +4,7 @@ import dayjs from 'dayjs'
 import 'dayjs/locale/ru'
 
 import { TTicket } from 'types'
+import { media } from 'theme'
 import { getStopPluralForm } from 'utils/pluralForm'
 
 import { Content } from './Content'
@@ -33,6 +34,12 @@ const Root = styled.li`
   &:last-child {
     margin-bottom: 0;
   }
+
+  ${media.tablet`
+    flex-direction: column-reverse;
+    align-items: center;
+    justify-content: flex-start;
+  `};
 `
 
 export const Ticket: React.FC<TProps> = ({ data, currency }): JSX.Element => {

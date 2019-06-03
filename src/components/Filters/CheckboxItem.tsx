@@ -10,7 +10,7 @@ type TProps = {
   value: any
   text: string
   checkAllItem?: boolean
-  onToggle: (value: any) => void //TODO: this ANY need to be fixed
+  onToggle: (value: number, isChecked: boolean) => void
   onToggleOnly: (value: number) => void
 }
 
@@ -54,6 +54,21 @@ const Root = styled.div`
   }
 `
 
+const CheckboxMask = styled.span`
+  height: 19px;
+  width: 19px;
+  margin-right: 11px;
+  overflow: hidden;
+  border-radius: 3px;
+  background-position: center top -7px;
+  background-repeat: no-repeat;
+  cursor: pointer;
+  transition: background-position 0.2s, border 0.2s ease-in-out;
+
+  background-image: url(${activeArrow});
+  border: ${({ theme }) => `1px solid ${theme.colors.border}`};
+`
+
 const Checkbox = styled.input.attrs({
   type: 'checkbox'
 })`
@@ -64,53 +79,31 @@ const Checkbox = styled.input.attrs({
   margin-right: 11px;
   transition: all 0.2s;
   position: relative;
+  display: none;
 
-  &:after {
-    content: '';
-    position: absolute;
-    overflow: hidden;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    border-radius: 3px;
-    transition: background-position 0.2s, border 0.2s ease-in-out;
-    border: ${({ theme }) => `1px solid ${theme.colors.border}`};
+  &:checked + ${CheckboxMask} {
+    border: ${({ theme }) => `1px solid ${theme.colors.primary}`};
+    background-color: ${({ theme }) => theme.colors.currencyHover};
     background-image: url(${activeArrow});
+    background-position: center center;
+    background-repeat: no-repeat;
+  }
+
+  &:disabled + ${CheckboxMask} {
+    border: ${({ theme }) => `1px solid ${theme.colors.border}`};
+    background-image: url(${disabledArrow});
     background-position: center top -7px;
     background-repeat: no-repeat;
-    cursor: pointer;
+    cursor: default;
   }
 
-  &:checked {
-    &:after {
-      border: ${({ theme }) => `1px solid ${theme.colors.primary}`};
-      background-color: ${({ theme }) => theme.colors.currencyHover};
-      background-image: url(${activeArrow});
-      background-position: center center;
-      background-repeat: no-repeat;
-    }
-  }
-
-  &:disabled {
-    &:after {
-      border: ${({ theme }) => `1px solid ${theme.colors.border}`};
-      background-image: url(${disabledArrow});
-      background-position: center top -7px;
-      background-repeat: no-repeat;
-      cursor: default;
-    }
-  }
-
-  &:checked:disabled {
-    &:after {
-      border: ${({ theme }) => `1px solid ${theme.colors.border}`};
-      background-color: ${({ theme }) => theme.colors.white};
-      background-image: url(${disabledArrow});
-      background-position: center center;
-      background-repeat: no-repeat;
-      cursor: default;
-    }
+  &:checked:disabled + ${CheckboxMask} {
+    border: ${({ theme }) => `1px solid ${theme.colors.border}`};
+    background-color: ${({ theme }) => theme.colors.white};
+    background-image: url(${disabledArrow});
+    background-position: center center;
+    background-repeat: no-repeat;
+    cursor: default;
   }
 `
 
@@ -130,11 +123,12 @@ export const CheckboxItem: React.FC<TProps> = ({
 }): JSX.Element => (
   <Root>
     <Checkbox
-      onChange={() => onToggle(checkAllItem ? isChecked : value)}
+      onChange={() => onToggle(value, isChecked)}
       checked={isChecked}
       disabled={disabled}
       value={value}
     />
+    <CheckboxMask onClick={() => onToggle(value, isChecked)} />
     <Text>{text}</Text>
     <CheckOnlyButton
       onClick={() => onToggleOnly(value)}
