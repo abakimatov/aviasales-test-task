@@ -21,6 +21,9 @@ const Root = styled.div`
 
   ${media.wide`
     padding: 0 20px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
   `};
 `
 

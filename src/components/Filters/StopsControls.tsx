@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 
 import { FiltersTitle } from 'ui'
+import { media } from 'theme'
 import { getStopPluralForm } from 'utils/pluralForm'
 import { i18n } from './i18n'
 
@@ -21,11 +22,22 @@ const Root = styled.div`
   justify-content: flex-start;
   align-items: flex-start;
   padding: 0 0 15px 0;
+  width: 100%;
+
+  ${media.wide`
+    padding: 15px 0;
+  `};
 `
 
 const TitleWrap = styled.span`
   padding-left: 15px;
   margin-bottom: 7px;
+
+  ${media.wide`
+    line-height: 1;
+    margin-bottom: 0;
+    padding-right: 15px;
+  `};
 `
 const CheckboxesWrap = styled.div`
   width: 100%;

@@ -1,6 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
 
+import { media } from 'theme'
+
 type TProps = {
   name: string
   value: string
@@ -36,16 +38,34 @@ const Root = styled.label<{ checked: boolean }>`
     }
   }
 
+  ${media.wide`
+    width: 50px;
+    flex: 0;
+  `};
+
   &:first-child {
     border-radius: 5px 0 0 5px;
+
+    ${media.wide`
+      border-radius: 5px 5px 0 0;
+    `};
   }
 
   &:last-child {
     border-radius: 0 5px 5px 0;
+
+    ${media.wide`
+      border-radius: 0 0 5px 5px;
+    `};
   }
 
   &:not(:last-child) {
     border-right-width: 0;
+
+    ${media.wide`
+     border-right-width: 1px;
+      border-bottom-width: 0;
+    `}
   }
 
   & span {

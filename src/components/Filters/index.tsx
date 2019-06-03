@@ -3,6 +3,7 @@ import styled from 'styled-components'
 
 import { TTicket, TRates } from 'types'
 import { Currencies } from 'enums'
+import { media } from 'theme'
 
 import { CurrenciesControls } from './CurrenciesControls'
 import { StopsControls } from './StopsControls'
@@ -24,6 +25,13 @@ const Root = styled.div`
   align-items: flex-start;
   width: 242px;
   padding-right: 10px;
+
+  ${media.wide`
+    width: 300px;
+    padding-right: 0;
+    padding-bottom: 30px;
+    justify-content: center;
+  `};
 `
 
 const Content = styled.section`
@@ -32,6 +40,13 @@ const Content = styled.section`
   background-color: ${({ theme }) => theme.colors.white};
   box-shadow: ${({ theme }) => theme.shadows.card};
   border-radius: ${({ theme }) => theme.radius};
+
+  ${media.wide`
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+  `};
 `
 
 export const Filters: React.FC<TProps> = ({

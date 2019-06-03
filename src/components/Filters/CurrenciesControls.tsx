@@ -3,6 +3,7 @@ import styled from 'styled-components'
 
 import { RadioButton, FiltersTitle } from 'ui'
 import { Currencies } from 'enums'
+import { media } from 'theme'
 import { i18n } from './i18n'
 
 type TProps = {
@@ -17,6 +18,10 @@ const Root = styled.div`
   justify-content: flex-start;
   align-items: flex-start;
   padding: 15px 15px 30px 15px;
+
+  ${media.wide`
+    width: unset;
+  `};
 `
 
 const RadiosWrap = styled.div`
@@ -25,6 +30,13 @@ const RadiosWrap = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+
+  ${media.wide`
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    width: unset;
+  `};
 `
 
 export const CurrenciesControls: React.FC<TProps> = ({

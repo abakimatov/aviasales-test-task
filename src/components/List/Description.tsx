@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 
+import { media } from 'theme'
 import airplaneIcon from 'ui/Icons/airplane.svg'
 
 type TProps = {
@@ -24,9 +25,14 @@ const Root = styled.div`
 
 const Time = styled.span`
   line-height: 26px;
-  text-align: left;
   font-size: ${({ theme }) => theme.fontSizes[5]};
   color: ${({ theme }) => theme.colors.darkText};
+  text-align: center;
+
+  ${media.desktop`
+    width: 100%;
+    margin-bottom: 20px;
+  `};
 `
 
 const StopsDivider = styled.div`
@@ -37,6 +43,10 @@ const StopsDivider = styled.div`
   justify-content: flex-end;
   align-items: center;
   padding: 0 20px;
+
+  ${media.desktop`
+    margin-bottom: 20px;
+  `};
 `
 
 const StopsCountRaw = styled.span`
@@ -78,6 +88,7 @@ const Info = styled.div<{ alignItems: string }>`
   justify-content: flex-start;
   margin-top: 10px;
   padding: 0 2px;
+
   align-items: ${({ alignItems }) => alignItems};
 `
 

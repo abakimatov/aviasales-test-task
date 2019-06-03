@@ -2,8 +2,9 @@ import React from 'react'
 import styled, { css } from 'styled-components'
 
 import { formatPrice } from 'utils/formatPrice'
-import mockLogo from 'ui/Img/mockLogo.png'
 import { Currencies } from 'enums'
+import { media } from 'theme'
+import mockLogo from 'ui/Img/mockLogo.png'
 
 import { i18n } from './i18n'
 
@@ -22,6 +23,23 @@ const Root = styled.div`
   padding: 25px 20px;
 
   border-right: ${({ theme }) => `1px solid ${theme.colors.ticketDivider}`};
+
+  ${media.desktop`
+    height: 237px;
+  `};
+  ${media.tablet`
+    width: 100%;
+    height: 100px;
+    border-right: none;
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding: 10px 20px;
+  `};
+  ${media.phone`
+    height: initial;
+    flex-direction: column;
+    
+  `};
 `
 
 const ProviderLogo = styled.img`
@@ -70,6 +88,11 @@ const BuyButton = styled.button`
     background-color: ${({ theme }) => theme.colors.hoveredBuyButton};
     box-shadow: ${({ theme }) => theme.shadows.hoveredBuyButton};
   }
+
+  ${media.phone`
+    width: 100%;
+    margin-top: 10px;
+  `};
 `
 
 const ButtonText = styled.span`

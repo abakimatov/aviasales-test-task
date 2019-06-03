@@ -1,9 +1,10 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import { Ticket } from './Ticket'
-
+import { media } from 'theme'
 import { TTicket } from 'types'
+
+import { Ticket } from './Ticket'
 
 type TProps = {
   tickets: TTicket[]
@@ -17,6 +18,10 @@ const Root = styled.ul`
   padding-left: 10px;
   list-style: none;
   margin: 0;
+
+  ${media.wide`
+    padding-left: 0;
+   `};
 `
 
 export const List: React.FC<TProps> = ({
