@@ -1,9 +1,9 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import { EmptyPlaceholder } from 'ui'
 import { media } from 'theme'
 import { TTicket } from 'types'
+import { EmptyPlaceholder } from 'ui'
 
 import { Ticket } from './Ticket'
 
@@ -15,10 +15,10 @@ type TProps = {
 
 const Root = styled.ul`
   flex: 1;
-
-  padding-left: 10px;
-  list-style: none;
   margin: 0;
+  height: 100%;
+  list-style: none;
+  padding-left: 10px;
 
   ${media.wide`
     padding-left: 0;
@@ -34,6 +34,7 @@ export const List: React.FC<TProps> = ({
     .filter(el => selectedStops.includes(el.stops))
     .sort((a, b) => a.price - b.price)
   const ticketsIsEmpty: boolean = updatedTickets.length < 1
+
   return (
     <Root>
       {updatedTickets.map((el, idx) => (

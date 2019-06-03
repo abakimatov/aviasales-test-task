@@ -7,17 +7,18 @@ import { Header } from './Header'
 
 const Root = styled.div`
   width: 100%;
-  height: 100%;
   display: flex;
+  min-height: 100vh;
+  align-items: center;
   flex-direction: column;
   justify-content: flex-start;
-  align-items: center;
 `
 
 const Main = styled.div`
+  flex: 1;
   display: flex;
+
   width: ${({ theme }) => theme.breakpoints[3]};
-  height: calc(100% - 161px);
 
   ${media.wide`
     width: 100%;

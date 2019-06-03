@@ -1,12 +1,12 @@
 import React from 'react'
 import styled, { css } from 'styled-components'
 
-import { formatPrice } from 'utils/formatPrice'
 import { media } from 'theme'
 import mockLogo from 'ui/Img/mockLogo.png'
+import { formatPrice } from 'utils/formatPrice'
 
-import { Currencies } from '../../constants'
 import { i18n } from './i18n'
+import { Currencies } from '../../constants'
 
 type TProps = {
   price: number
@@ -17,10 +17,10 @@ const Root = styled.div`
   width: 200px;
   display: flex;
   height: 161px;
+  padding: 25px 20px;
+  align-items: center;
   flex-direction: column;
   justify-content: space-between;
-  align-items: center;
-  padding: 25px 20px;
 
   border-right: ${({ theme }) => `1px solid ${theme.colors.ticketDivider}`};
 
@@ -30,15 +30,14 @@ const Root = styled.div`
   ${media.tablet`
     width: 100%;
     height: 100px;
-    border-right: none;
-    flex-direction: row;
     flex-wrap: wrap;
+    border-right: none;
     padding: 10px 20px;
+    flex-direction: row;
   `};
   ${media.phone`
     height: initial;
     flex-direction: column;
-    
   `};
 `
 
@@ -77,16 +76,16 @@ const BuyButton = styled.button`
   height: 56px;
   border: none;
   padding: 6px 0;
-  transition: all 0.2s;
   cursor: pointer;
+  transition: all 0.2s;
 
   border-radius: ${({ theme }) => theme.radius};
-  background-color: ${({ theme }) => theme.colors.buyButton};
   box-shadow: ${({ theme }) => theme.shadows.buyButton};
+  background-color: ${({ theme }) => theme.colors.buyButton};
 
   &:hover {
-    background-color: ${({ theme }) => theme.colors.hoveredBuyButton};
     box-shadow: ${({ theme }) => theme.shadows.hoveredBuyButton};
+    background-color: ${({ theme }) => theme.colors.hoveredBuyButton};
   }
 
   ${media.phone`

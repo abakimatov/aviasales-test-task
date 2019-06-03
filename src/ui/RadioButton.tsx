@@ -6,18 +6,18 @@ import { media } from 'theme'
 type TProps = {
   name: string
   value: string
-  onToggle: (value: string) => void
   checked: boolean
+  onToggle: (value: string) => void
 }
 
 const Root = styled.label<{ checked: boolean }>`
-  position: relative;
   flex: 1;
   height: 40px;
   display: flex;
-  justify-content: center;
+  position: relative;
   align-items: center;
   transition: all 0.2s;
+  justify-content: center;
 
   border: ${({ theme, checked }) =>
     checked
@@ -39,8 +39,8 @@ const Root = styled.label<{ checked: boolean }>`
   }
 
   ${media.wide`
-    width: 50px;
     flex: 0;
+    width: 50px;
   `};
 
   &:first-child {
@@ -63,31 +63,28 @@ const Root = styled.label<{ checked: boolean }>`
     border-right-width: 0;
 
     ${media.wide`
-     border-right-width: 1px;
+      border-right-width: 1px;
       border-bottom-width: 0;
     `}
-  }
-
-  & span {
   }
 `
 
 const HiddenRadio = styled.input.attrs({
   type: 'radio'
 })`
+  width: 0;
+  height: 0;
   -webkit-appearance: none;
   -moz-appearance: none;
-  height: 0;
-  width: 0;
 
   &:before {
-    content: '';
-    position: absolute;
     top: 0;
     right: 0;
     bottom: 0;
     left: 0;
+    content: '';
     cursor: pointer;
+    position: absolute;
   }
 `
 
@@ -101,19 +98,19 @@ const Text = styled.span<{ checked: boolean }>`
 `
 
 export const RadioButton: React.FC<TProps> = ({
-  onToggle,
-  value,
   name,
-  checked
+  value,
+  checked,
+  onToggle
 }): JSX.Element => {
   return (
     <Root htmlFor={value} checked={checked}>
       <HiddenRadio
-        onChange={() => onToggle(value)}
         id={value}
-        value={value}
         name={name}
+        value={value}
         checked={checked}
+        onChange={() => onToggle(value)}
       />
       <Text checked={checked}>{value}</Text>
     </Root>

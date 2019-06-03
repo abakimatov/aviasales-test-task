@@ -1,6 +1,5 @@
 import axios from 'axios'
 
-//TODO: need to be improved
 import { TRates } from 'types'
 
 type TParams = {

@@ -11,28 +11,32 @@ const animate = keyframes`
 `
 
 const Root = styled.div`
-  width: 100%;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
   display: flex;
-  justify-content: center;
+  position: fixed;
   align-items: center;
-  height: 100%;
+  justify-content: center;
 `
 
 const SpinnerBody = styled.div`
-  display: inline-block;
   width: 64px;
   height: 64px;
+  display: inline-block;
 
   &:after {
-    ${css`
-      animation: ${animate} 1.2s linear infinite;
-    `};
     content: ' ';
     display: block;
     width: 46px;
     height: 46px;
     margin: 1px;
     border-radius: 50%;
+
+    ${css`
+      animation: ${animate} 1.2s linear infinite;
+    `};
     border: ${({ theme }) => `5px solid ${theme.colors.primary}`};
     border-color: ${({ theme }) =>
       `${theme.colors.primary} transparent ${

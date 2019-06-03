@@ -5,44 +5,45 @@ import { media } from 'theme'
 import airplaneIcon from 'ui/Icons/airplane.svg'
 
 type TProps = {
-  stopsCount: string | null
   originRaw: string
-  destinationRaw: string
-  departureDate: string
-  arrivalDate: string
-  departureTime: string
   arrivalTime: string
+  arrivalDate: string
+  departureDate: string
+  departureTime: string
+  destinationRaw: string
+  stopsCount: string | null
 }
 
 const Root = styled.div`
   flex: 1;
-  padding: 26px 25px;
   display: flex;
-  justify-content: flex-start;
-  align-items: flex-start;
   flex-wrap: wrap;
+  padding: 26px 25px;
+  align-items: flex-start;
+  justify-content: flex-start;
 `
 
 const Time = styled.span`
   line-height: 26px;
-  font-size: ${({ theme }) => theme.fontSizes[5]};
-  color: ${({ theme }) => theme.colors.darkText};
   text-align: center;
 
+  color: ${({ theme }) => theme.colors.darkText};
+  font-size: ${({ theme }) => theme.fontSizes[5]};
+
   ${media.desktop`
-  width: 100%;
+    width: 100%;
     margin-bottom: 20px;
   `};
 `
 
 const StopsDivider = styled.div`
-  height: 26px;
   flex: 1;
+  height: 26px;
   display: flex;
+  padding: 0 20px;
+  align-items: center;
   flex-direction: column;
   justify-content: flex-end;
-  align-items: center;
-  padding: 0 20px;
 
   ${media.desktop`
     margin-bottom: 20px;
@@ -50,9 +51,9 @@ const StopsDivider = styled.div`
 `
 
 const StopsCountRaw = styled.span`
+  max-height: 12px;
   line-height: 12px;
   text-transform: uppercase;
-  max-height: 12px;
 
   color: ${({ theme }) => theme.colors.grayText};
   font-size: ${({ theme }) => theme.fontSizes[0]};
@@ -61,35 +62,33 @@ const StopsCountRaw = styled.span`
 const IconDivider = styled.div`
   width: 100%;
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
 `
 
 const AirplaneIcon = styled.div`
   width: 14px;
   height: 14px;
-  background-image: url(${airplaneIcon});
-  background-position: center center;
-  background-repeat: no-repeat;
   margin-left: 1px;
+  background-repeat: no-repeat;
+  background-position: center center;
+
+  background-image: url(${airplaneIcon});
 `
 
 const AirplaneLine = styled.div`
-  height: 1px;
   flex: 1;
+  height: 1px;
 
   background-color: ${({ theme }) => theme.colors.border};
 `
 
-const Info = styled.div<{ alignItems: string }>`
-  display: flex;
-  flex-direction: column;
+const Info = styled.div<{ textAlign: string }>`
   width: 50%;
-  justify-content: flex-start;
-  margin-top: 10px;
   padding: 0 2px;
+  margin-top: 10px;
 
-  align-items: ${({ alignItems }) => alignItems};
+  text-align: ${({ textAlign }) => textAlign};
 `
 
 const Location = styled.span`
@@ -125,12 +124,14 @@ export const Description: React.FC<TProps> = ({
       </IconDivider>
     </StopsDivider>
     <Time>{arrivalTime}</Time>
-    <Info alignItems="flex-start">
+    <Info textAlign="left">
       <Location>{originRaw}</Location>
+      <br />
       <Date>{departureDate}</Date>
     </Info>
-    <Info alignItems="flex-end">
+    <Info textAlign="right">
       <Location>{destinationRaw}</Location>
+      <br />
       <Date>{arrivalDate}</Date>
     </Info>
   </Root>
